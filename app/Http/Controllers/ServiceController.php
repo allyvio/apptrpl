@@ -71,6 +71,7 @@ class ServiceController extends Controller
         $new->kamar_id = $request->get('id');
         $new->status = "On-Order";
         $new->user_id = Auth::user()->id;
+        $new->tanggal = $request->get('tanggal');
         $new->keterangan = $request->get('keterangan');
         $new->save();
         return back();

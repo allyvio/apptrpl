@@ -19,6 +19,10 @@
                     <form action="{{url('booked')}}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{$data->id}}">
+                        <label>Tanggal Masuk</label>
+                        <input type="date" name="tanggal" class="form-control">
+                        <br>
+                        <label>Keterangan</label>
                         <textarea name="keterangan" class="form-control" id="" cols="30" rows="10"></textarea>
 
                         <button type="submit" class="d-inline-block button gradient-bg">Pesan</button>
