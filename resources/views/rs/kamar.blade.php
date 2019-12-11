@@ -39,8 +39,8 @@
                         <th scope="row">{{$kamar->nama_lengkap}}</th>
                         <th scope="row">{{$kamar->status}}</th>
                         <th>
-                            <a href="{{url('foto/hapus/')}}">
-                                <button class="btn btn-outline-primary">Hapus</button>
+                            <a href="{{url('kamar/ubah/'.$kamar->id)}}">
+                                <button class="btn btn-outline-primary">Ubah</button>
                             </a>
                         </th>
 

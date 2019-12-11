@@ -92,14 +92,15 @@ class ServiceController extends Controller
     }
     public function kamarbook($id)
     {
-        $id_rs = \App\Rumahsakit::where('user_id', $id)->value('id');
-        $data = \App\Kamar::where('rumahsakit_id', $id_rs)->where('status', "booked")->get()->all();
+        // $id_rs = \App\Rumahsakit::where('user_id', $id)->value('id');
+        // $data = \App\Kamar::where('rumahsakit_id', $id_rs)->where('status', "booked")->get()->all();
+        $data = \App\Bookkamar::all();
         // dd($kamar);
         return view('rs.bookkamar', compact('data'));
     }
     public function showDetail($id)
     {
-        $data = \App\Bookkamar::where('kamar_id', $id)->get()->all();
+        $data = \App\Bookkamar::findOrFail($id);
         return view('rs.detailbook', compact('data'));
     }
     public function skl(Request $request)

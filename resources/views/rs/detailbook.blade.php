@@ -10,22 +10,22 @@
     </div>
     <div class="container">
         <div class="row mb-3">
-            @foreach($data as $item)
+
             <div class="card">
                 <div class="card-header">
                     @php
-                    $username = \DB::table('users')->where('id', $item->user_id)->value('name');
+                    $username = \DB::table('users')->where('id', $data->user_id)->value('name');
                     @endphp
                     {{$username}}
                 </div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                        <p>{{$item->keterangan}}</p>
+                        <p>{{$data->keterangan}}</p>
 
-                        <footer class="blockquote-footer">Tanggal Book : {{ date('d M Y', $item->created_at->timestamp) }}</footer>
+                        <footer class="blockquote-footer">Tanggal Book : {{ date('d M Y', $data->created_at->timestamp) }}</footer>
 
-                        <footer class="blockquote-footer">Tanggal Masuk : {{ $item->tanggal }}</footer>
-                        <footer class="blockquote-footer">Status : {{ $item->status }}</footer>
+                        <footer class="blockquote-footer">Tanggal Masuk : {{ $data->tanggal }}</footer>
+                        <footer class="blockquote-footer">Status : {{ $data->status }}</footer>
                     </blockquote>
                 </div>
             </div>
@@ -42,15 +42,15 @@
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="foto" aria-describedby="inputGroupFileAddon01">
-                            <input type="hidden" name="id" value="{{$item->id}}">
+                            <input type="hidden" name="id" value="{{$data->id}}">
 
                             <label class="custom-file-label" for="inputGroupFile01">Pilih Surat Keterangan Lahir</label>
                         </div>
                     </div>
                     <br>
                     <button type="submit" class="btn btn-primary">Upload</button>
-                    @if($item->foto != null)
-                    <a href="{{url('pdf/'.$item->id)}}">
+                    @if($data->foto != null)
+                    <a href="{{url('pdf/'.$data->id)}}">
                         Lihat skl
                     </a>
                     @endif
@@ -59,7 +59,7 @@
 
         </div>
 
-        @endforeach
+
     </div>
 </div>
 @endsection
