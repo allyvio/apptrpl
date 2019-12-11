@@ -23,6 +23,9 @@
                                 <a href="{{url('detail/'.$control->id)}}">
                                     <span class="badge badge-primary">Detail</span>
                                 </a>
+                                <a href="{{url('ubah/'.$control->id)}}">
+                                    <span class="badge badge-primary">Ubah bidan</span>
+                                </a>
                             </li>
                         </ul>
                     </div>

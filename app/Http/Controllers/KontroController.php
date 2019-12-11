@@ -78,4 +78,17 @@ class KontroController extends Controller
         $new->save();
         return back();
     }
+    public function ubahBidan($id)
+    {
+        $id = $id;
+        $data = \App\User::where('role', "bidan")->get()->all();
+        return view('ubahbidan', compact(['id', 'data']));
+    }
+    public function saveUbah($control, $bidan)
+    {
+        $data = \App\Bookbidan::findOrFail($control);
+        $data->bidan_id = $bidan;
+        $data->save();
+        return redirect('mycontrol/' . Auth::user()->id);
+    }
 }

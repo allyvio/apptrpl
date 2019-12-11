@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/password/update', 'UserController@passwordUpdate');
     Route::get('/setting', 'HomeController@setting');
     Route::get('/setting/{id}', 'UserController@settingBidan');
+    Route::get('/ubah/{id}', 'KontroController@ubahBidan');
+    Route::get('/ubah/bidan/{control}/{bidan}', 'KontroController@saveUbah');
 });
 
 Route::group(['middleware' => ['auth', 'CheckRole:admin']], function () {

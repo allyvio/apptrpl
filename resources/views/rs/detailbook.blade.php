@@ -10,11 +10,11 @@
     </div>
     <div class="container">
         <div class="row mb-3">
-
             <div class="card">
                 <div class="card-header">
                     @php
                     $username = \DB::table('users')->where('id', $data->user_id)->value('name');
+                    $user_id = \DB::table('users')->where('id', $data->user_id)->value('id');
                     @endphp
                     {{$username}}
                 </div>
@@ -29,8 +29,23 @@
                     </blockquote>
                 </div>
             </div>
+        </div>
+        <div class="row mb-3">
+            <div class="card">
+                <div class="card-header">
 
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>{{$data->keterangan}}</p>
 
+                        <footer class="blockquote-footer">Tanggal Book : {{ date('d M Y', $data->created_at->timestamp) }}</footer>
+
+                        <footer class="blockquote-footer">Tanggal Masuk : {{ $data->tanggal }}</footer>
+                        <footer class="blockquote-footer">Status : {{ $data->status }}</footer>
+                    </blockquote>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
