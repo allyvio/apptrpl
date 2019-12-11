@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Bookkamar;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -15,16 +16,23 @@ class ServiceController extends Controller
         $_id = $id;
         return view('rs.kamar', compact('data', '_id'));
     }
+    public function notif($id)
+    {
+        $data = \App\Bookkamar::findOrFail($id);
+        $data->status = "Selesai";
+        $data->save();
+        return back();
+    }
     public function storeKamar(Request $request)
     {
         \Validator::make($request->all(), [
-            'nama_kamar'  => 'required|max:50|regex:/^[a-zA-Z]+$/u|',
-            'kelas'  => 'required|max:50|regex:/^[a-zA-Z]+$/u|',
+            'nama_kamar'  => 'required|max:50',
+            'kelas'  => 'required|max:50',
             'price'  => 'required',
             'keterangan'  => 'required|max:500',
-            'dokter'  => 'required|max:50|regex:/^[a-zA-Z]+$/u|',
-            'spesialis'  => 'required|max:50|regex:/^[a-zA-Z]+$/u|',
-            'title'  => 'required|max:50|regex:/^[a-zA-Z]+$/u|',
+            'dokter'  => 'required|max:50',
+            'spesialis'  => 'required|max:50',
+            'title'  => 'required|max:50',
             'lama'  => 'required|max:50',
             'e-dok'  => 'required|email|max:50',
             'foto'  => 'required|mimes:jpg,png,jpeg',
@@ -51,7 +59,7 @@ class ServiceController extends Controller
     }
     public function bookKamar($id)
     {
-        $data = \App\Kamar::where('rumahsakit_id', $id)->get()->all();
+        $data = \App\Kamar::where('rumahsakit_id', $id)->where('status', 'ready')->get()->all();
         // dd($data);
         return view('persalinan', compact('data'));
     }
@@ -74,7 +82,7 @@ class ServiceController extends Controller
         $new->tanggal = $request->get('tanggal');
         $new->keterangan = $request->get('keterangan');
         $new->save();
-        return back();
+        return redirect('persalinan');
     }
     public function showKamarByID($id)
     {
@@ -118,5 +126,12 @@ class ServiceController extends Controller
         $data = \App\Bookkamar::findOrFail($id);
         // dd($data);
         return view('pdf', compact('data'));
+    }
+    public function showskl()
+    {
+        $data = DB::table('bookkamar')
+            ->whereNotNull('foto')
+            ->get()->all();
+        return view('admin.skl', compact('data'));
     }
 }

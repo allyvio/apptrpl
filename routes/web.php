@@ -23,7 +23,11 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/pesan/{id}', 'ServiceController@bookKamar');
+Route::post('/bumil/store', 'UserController@storebumil');
 Route::get('/pdf/{id}', 'ServiceController@pdf');
+Route::get('/artikel', 'HomeController@showall');
+Route::get('/read/{id}', 'HomeController@showid');
+
 
 Route::group(['middleware' => ['auth']], function () {
     // Route::get('/admin', 'AdminController@index');
@@ -37,18 +41,29 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/persalinan', 'KontroController@showrs');
     Route::get('/pesan/kamar/{id}', 'ServiceController@pesankamar');
     Route::get('/mykamar/{id}', 'ServiceController@showKamarById');
+    Route::get('/user/skl', 'ServiceController@showskl');
     Route::post('/booked', 'ServiceController@book');
+    Route::post('/user/update', 'UserController@userUpdate');
+    Route::post('/password/update', 'UserController@passwordUpdate');
+    Route::get('/setting', 'HomeController@setting');
+    Route::get('/setting/{id}', 'UserController@settingBidan');
 });
 
 Route::group(['middleware' => ['auth', 'CheckRole:admin']], function () {
     Route::get('/user/bidan', 'UserController@showBidan');
     Route::get('/user/rs', 'UserController@showRs');
+    Route::get('/user/edu', 'HomeController@artikel');
+    Route::get('/artikel/{id}', 'HomeController@artikelupdate');
+    Route::get('/notif/{id}', 'ServiceController@notif');
+    Route::get('/artikel/hapus/{id}', 'HomeController@hapusartikel');
+    Route::post('/artikel/update', 'HomeController@artikelUp');
     Route::post('/bidan/store', 'UserController@createBidan');
     Route::post('/rs/store', 'UserController@createRs');
+    Route::post('/artikel/store', 'HomeController@createArtikel');
 });
 Route::group(['middleware' => ['auth', 'CheckRole:bidan']], function () {
     Route::get('/menu/bidan', 'UserController@menubidan');
-    Route::get('/setting/{id}', 'UserController@settingBidan');
+
     Route::get('/kontrol/{id}', 'KontroController@kontrolBidan');
     Route::get('/cek/{id}', 'KontroController@cek');
     Route::post('/cek/store', 'KontroController@cekStore');

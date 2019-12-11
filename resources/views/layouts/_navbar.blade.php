@@ -10,15 +10,18 @@
                     <nav class="site-navigation d-flex justify-content-end align-items-center">
                         <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-items-center">
                             <li class="current-menu-item"><a href="/">Home</a></li>
-                            <li><a href="about.html">About us</a></li>
-                            <!-- <li><a href="contact.html">Daftar</a></li> -->
+                            <li>
+                                <a class="nav-link" href="{{url('artikel')}}">
+                                    {{ ('artikel') }}
+                                </a>
+                            </li>
                             @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="/maintenance">{{ __('Register') }}</a>
+                                <a class="nav-link" href="/register">{{ __('Register Ibu Hamil') }}</a>
 
                             </li>
                             @endif
@@ -48,12 +51,19 @@
 
                             @if(Auth::user()->role == "bumil")
                             <li>
-
                                 <a class="nav-link" href="{{url('persalinan')}}">
                                     {{ ('Persalinan') }}
                                 </a>
                             </li>
                             @endif
+                            @if(Auth::user()->role == "bumil")
+                            <li>
+                                <a class="nav-link" href="{{url('setting')}}">
+                                    {{ ('Menu') }}
+                                </a>
+                            </li>
+                            @endif
+
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -66,9 +76,6 @@
                             </li>
                             @endguest
                             <!-- <li><a href="contact.html">login</a></li> -->
-                            <li class="call-btn button gradient-bg mt-3 mt-md-0">
-                                <a class="d-flex justify-content-center align-items-center" href="#"><img src="{{asset('medart/images/emergency-call.png')}}"> (021) 3360970</a>
-                            </li>
                         </ul>
                     </nav><!-- .site-navigation -->
 

@@ -5,23 +5,20 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Bidan</h1>
+        <h1 class="h3 mb-0 text-gray-800">Artikel</h1>
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
     <div class="container">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Add Bidan
+            Add Artikel
         </button>
         <table class="table table-hover mt-3" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr class="bg-primary text-light">
                     <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Handphone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Kota</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Judul</th>
+                    <th scope="col">Tanggal</th>
                     <th scope="col">Aksi</th>
                     <!-- <th scope="col">Handle</th> -->
                 </tr>
@@ -30,29 +27,32 @@
                 <?php
                 $number = 1;
                 ?>
+                @php
+                $pivot = DB::table('artikel')->whereNotNull('isi')->get();
+                @endphp
 
-                @foreach($pivot as $user)
-
-
+                @foreach($pivot as $artc)
                 <tr>
                     <th scope="row">{{$number}}</th>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->hp}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->kota}}</td>
-                    <td>{{$user->status}}</td>
-                    <td>
+                    <th scope="row">{{$artc->judul}}</th>
+                    <th scope="row">{{$artc->created_at}}</th>
+                    <th>
                         <!-- <a href="">
                             <button class="btn btn-outline-primary">Detail</button>
                         </a> -->
-                        <a href="{{url('terima/'.$user->id)}}">
-                            <button class="btn btn-outline-primary">Terima</button>
+                        <a href="{{url('artikel/'.$artc->id)}}">
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-info"></i>
+                            </button>
                         </a>
-                        <a href="{{url('tolak/'.$user->id)}}">
-                            <button class="btn btn-outline-danger">Tolak</button>
+                        <a href="{{url('artikel/hapus/'.$artc->id)}}">
+                            <button class="btn btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </a>
+                    </th>
 
-                        </a>
-                    </td>
+
 
                 </tr>
                 <?php $number++; ?>
@@ -74,24 +74,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{url('bidan/store')}}" method="post">
+                <form action="{{url('artikel/store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" name="nama" class="form-control" placeholder="Nama">
+                        <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" placeholder="judul">
+                        @error('judul') <span class="badge badge-danger">{{$message}}</span> @enderror
                     </div>
+                    <textarea name="isi" cols="30" rows="10" class="form-control @error('isi') is-invalid @enderror" placeholder="isi"></textarea>
+                    @error('isi') <span class="badge badge-danger">{{$message}}</span> @enderror
                     <div class="input-group mb-3">
-                        <input type="text" name="email" class="form-control" placeholder="Email">
+                        <input type="file" name="foto" class="form-control @error('judul') is-invalid @enderror" placeholder="foto">
+                        @error('isi') <span class="badge badge-danger">{{$message}}</span> @enderror
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" name="hp" class="form-control" placeholder="No hp">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" name="kota" class="form-control" placeholder="alamat kerja">
-                    </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

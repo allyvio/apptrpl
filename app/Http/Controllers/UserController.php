@@ -14,19 +14,41 @@ class UserController extends Controller
     }
     public function showBidan()
     {
-        return view('admin.bidan');
+        $pivot = DB::table('users')->where('role', 'bidan')->get();
+
+        return view('admin.bidan', compact('pivot'));
+    }
+    public function storebumil(Request $request)
+    {
+        \Validator::make($request->all(), [
+            'name'  => 'required|max:50',
+            'email'  => 'required|email|unique:users',
+            'phone'  => 'required|max:13',
+            'password'  => 'required|min:6',
+            'address'  => 'required|min:6',
+        ])->validate();
+        $new = new \App\User;
+        $new->name = $request->get('name');
+        $new->email = $request->get('email');
+        $new->hp = $request->get('phone');
+        $new->remember_token = str_random(60);
+        $new->password = bcrypt($request->get('password'));
+        $new->kota = $request->get('address');
+        $new->role = 'bumil';
+        $new->status = 'aktif';
+        $new->save();
+        return redirect('/');
     }
     public function createBidan(Request $request)
     {
         // dd($request->all());
         \Validator::make($request->all(), [
-            'nama'  => 'required|max:50|regex:/^[a-zA-Z]+$/u|',
+            'nama'  => 'required|max:50',
             'email'  => 'required|email|unique:users',
             'hp'  => 'required|max:13',
             'password'  => 'required|min:6',
         ])->validate();
         $new = new \App\User;
-
         $new->name = $request->get('nama');
         $new->email = $request->get('email');
         $new->hp = $request->get('hp');
@@ -93,5 +115,29 @@ class UserController extends Controller
     public function menurs()
     {
         return view('rs.index');
+    }
+    public function userUpdate(Request $request)
+    {
+        \Validator::make($request->all(), [
+            'name'  => 'required|max:50',
+            'kota'  => 'required|max:50',
+        ])->validate();
+        // dd($request->all());
+        $update = \App\User::findOrFail($request->id);
+        $update->name = $request->get('name');
+        $update->kota = $request->get('kota');
+        $update->save();
+        return back();
+    }
+    public function passwordUpdate(Request $request)
+    {
+        \Validator::make($request->all(), [
+            'password'  => 'required|min:5',
+        ])->validate();
+        dd(bcrypt($request->get('name')));
+        $update = \App\User::findOrFail($request->id);
+        $update->password = bcrypt($request->get('name'));
+        $update->save();
+        return back();
     }
 }

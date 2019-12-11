@@ -42,6 +42,16 @@
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>User Rs</span></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('user/skl')}}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>SKL</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('user/edu')}}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Manage Artikel</span></a>
+        </li>
         @endif
         @if (auth()->user()->role == 'bidan')
         <li class="nav-item">

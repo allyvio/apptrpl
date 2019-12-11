@@ -44,6 +44,7 @@ class KontroController extends Controller
         $data = \App\Cek::where('bookbidan_id', $id)->get()->all();
         $bookbidan = \App\Bookbidan::findOrFail($id)->value('bidan_id');
         $name_officer = \App\User::findOrFail($bookbidan)->value('name');
+        // dd($name_officer);
         return view('singlecontrol', compact('data', 'name_officer'));
     }
     public function kontrolBidan($id)

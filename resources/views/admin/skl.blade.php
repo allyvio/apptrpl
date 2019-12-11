@@ -16,10 +16,9 @@
                 <tr class="bg-primary text-light">
                     <th scope="col">No</th>
                     <th scope="col">Nama</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">role</th>
-                    <th scope="col">status</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Skl</th>
+                    <th scope="col" class="text-center">Aksi</th>
                     <!-- <th scope="col">Handle</th> -->
                 </tr>
             </thead>
@@ -27,28 +26,29 @@
                 <?php
                 $number = 1;
                 ?>
-                @foreach($data as $user)
+                @foreach($data as $skl)
                 <tr>
                     <th scope="row">{{$number}}</th>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->role}}</td>
-                    <td>{{$user->status}}</td>
+                    @php
+                    $username = \DB::table('users')->where('id', $skl->user_id)->value('name');
+                    @endphp
+                    <td>{{$username}}</td>
                     <td>
-                        <!-- <a href="">
-                            <button class="btn btn-outline-primary">Detail</button>
-                        </a> -->
-                        <a href="{{url('user/id')}}">
-                            <button class="btn btn-outline-primary">
-                                <i class="fas fa-info"></i>
-                            </button>
+                        <a href="{{url('pdf/'.$skl->id)}}">
+                            SKL
                         </a>
-                        <a href="{{url('user/id')}}">
-                            <button class="btn btn-outline-danger">
-                                <i class="fas fa-trash"></i>
+                    </td>
+                    <td>
+                        {{$skl->status}}
+                    </td>
+                    <td class="text-center">
+                        <a href="{{url('notif/'.$skl->id)}}">
+                            <button class="btn btn-outline-primary">
+                                Konfirmasi Selesai
                             </button>
                         </a>
                     </td>
+
 
                 </tr>
                 <?php $number++; ?>
